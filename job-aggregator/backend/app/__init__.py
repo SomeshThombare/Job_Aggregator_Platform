@@ -15,9 +15,9 @@ def create_app(config_class=Config):
     app.register_blueprint(jobs_bp, url_prefix="/api")
 
     with app.app_context():
+        from app import models  # Import every model before creating tables.
         db.create_all()
         from app.services.seed import seed_demo_data
         seed_demo_data()
 
     return app
-
